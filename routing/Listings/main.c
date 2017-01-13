@@ -18,7 +18,7 @@
 #include "autonet.h"
 
 //--------------------
-#define MY_DEVICE_ADDR  0x0012  //!!!!! SHOULD set different mac addr  !!!!!!!!
+#define MY_DEVICE_ADDR  0x0007 //!!!!! SHOULD set different mac addr  !!!!!!!!
 #define SINK_ADDR 0x0012
 #define EMITTER_ADDR 0x0001   // periodically (200ms) sent, set by TA
 #define DEBUG 1
@@ -44,7 +44,7 @@
 #define T 200 // unit : ms
 
 #define EN_ROUTE_LIFE 1
-#define RENEW_INTERVAL 5000/T
+#define RENEW_INTERVAL (5000/(T))
 uint16_t renew_interval;  // unit : ms
 
 int debug=DEBUG;
@@ -162,16 +162,18 @@ int main(void)
 			 if (r!=NULL) setGPIO(5,1);
 			 else setGPIO(5,0);
 			
-		  } 
+		 
 		 
 			#if EN_ROUTE_LIFE==1
-			
-			  if (renew_interval==0 && renew_routing==1) {
-					 renew_route(&rtable);
-					 renew_interval=RENEW_INTERVAL;
+
+			  dump_table(&rtable);
+			  if (renew_interval==0 && host.my_addr!=SINK_ADDR) {				
+					renew_interval=RENEW_INTERVAL;
+					renew_route(&rtable);
 				}
 			#endif
-
+				
+      } 
 	
 		if(RF_Rx(rcvd_msg, &rcvd_length, &rcvd_rssi)){
 			
@@ -324,19 +326,9 @@ int main(void)
 								     dump_table(&rtable);	
 							    	blink_led(5,30,50); 
 								    setGPIO(4,1);
-								    
-							 
+								    						 
 							 } 
-					#if EN_ROUTE_LIFE==1
-					         
-							 if (pkt->data[2]==0xD) {
-							     //from seq=0xD we start renew routing table 
-								   renew_routing=1;
-					   
-							
-							 }
-			   #endif
-							 
+
 							  
 							 
 							
@@ -350,6 +342,10 @@ int main(void)
 							          // don't change 'from addr'
 							  //  send_message(DATA,SINK_ADDR,host.my_addr,,pkt->data,pkt->length);
 				    }
+						
+
+							 
+						
 						
 						 blink_led(5,2,50); 
 				  break;
@@ -629,15 +625,17 @@ Route * find_next_hop(uint16_t addr, Route_Table *tbl)
 void renew_route(Route_Table *tbl)
 {
    uint8_t i;
-
+  debug_print("renew_route\r\n");
+	debug_print(output_array);
    for (i=0;i<tbl->index;i++)
    {
-       
+          
 		 if (timer_count - tbl->table[i].life_time > 10000/T) //llfe time : 10 seconds
           memset(&tbl->table[i],0,sizeof(Route));     
    }
 
   // if (debug) dump_table(tbl);
+
 
 }
 

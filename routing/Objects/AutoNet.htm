@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\AutoNet.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\AutoNet.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Fri Jan 13 17:27:54 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Fri Jan 13 22:41:43 2017
 <BR><P>
 <H3>Maximum Stack Usage =        472 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2929,6 +2929,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_myinfo
 <LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_RREP
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;renew_route
 <LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dump_table
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dump_packet
@@ -2986,7 +2987,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[3c]"></a>main</STRONG> (Thumb, 858 bytes, Stack size 288 bytes, main.o(i.main))
+<P><STRONG><a name="[3c]"></a>main</STRONG> (Thumb, 852 bytes, Stack size 288 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = main &rArr; send_message &rArr; RF_Tx &rArr; Us2400Tx &rArr; Us2400WriteLongRegBlock &rArr; SPI_Proc &rArr; DMA_Init
 </UL>
@@ -3040,10 +3041,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Calculate_Speed
 </UL>
 
-<P><STRONG><a name="[16d]"></a>renew_route</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, main.o(i.renew_route))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = renew_route
+<P><STRONG><a name="[16d]"></a>renew_route</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, main.o(i.renew_route))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = renew_route &rArr; debug_print &rArr; COM2_Tx &rArr; USART_ITConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+<BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_print
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
