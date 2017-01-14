@@ -4,8 +4,8 @@
 // joseph(D05921016@ntu.edu.tw), 
 // Wei-Che Chen (r05942110@ntu.edu.tw)
 // Chin yen su (james821007@gmail.com) 
-// Version: 1.0
-// Date: January 13,2017
+// Version: 1.2
+// Date: January 14,2017
 //---------------------
 // Note: 
 // LED Pin on PA5(J3-16) 
@@ -18,15 +18,15 @@
 #include "autonet.h"
 
 //--------------------
-#define MY_DEVICE_ADDR  0x0007 //!!!!! SHOULD set different mac addr  !!!!!!!!
+#define MY_DEVICE_ADDR  0x0012 //!!!!! SHOULD set different mac addr  !!!!!!!!
 #define SINK_ADDR 0x0012
-#define EMITTER_ADDR 0x0001   // periodically (200ms) sent, set by TA
+#define EMITTER_ADDR 0x0001   // periodically sent  (200ms), set by TA
 #define DEBUG 1
 //------------------------------
 
 
-#define PAN_ID  0x00AA   //set to the same with TA code
-#define RADIO_CHANNEL  18
+#define PAN_ID  0x00AA   //same with TA code
+#define RADIO_CHANNEL  18 //same with TA code
 #define TYPE 0x1
 
 #define RCV_BUFSIZE 128
@@ -44,7 +44,8 @@
 #define T 200 // unit : ms
 
 #define EN_ROUTE_LIFE 1
-#define RENEW_INTERVAL (5000/(T))
+#define RENEW_INTERVAL (5000/(T))  //5 seconds
+#define LIFE_TIME (RENEW_INTERVAL*2)
 uint16_t renew_interval;  // unit : ms
 
 int debug=DEBUG;
@@ -110,7 +111,6 @@ void send_DATA(uint16_t id, uint8_t *data, uint8_t size,Route_Table *tbl);
 void send_DATA_ACK(uint16_t id, uint8_t *data, uint8_t size,Route_Table *tbl);
 void init(void);
 
-void update_table(Packet *pkt,Route_Table *tbl);
 //---Routing Table Processing-----------
 
 void init_table(Route_Table *tbl);
@@ -166,10 +166,10 @@ int main(void)
 		 
 			#if EN_ROUTE_LIFE==1
 
-			  dump_table(&rtable);
-			  if (renew_interval==0 && host.my_addr!=SINK_ADDR) {				
-					renew_interval=RENEW_INTERVAL;
-					renew_route(&rtable);
+			  //dump_table(&rtable);
+			 if (renew_interval==0 ) {			
+		 			renew_interval=RENEW_INTERVAL;
+				  renew_route(&rtable);
 				}
 			#endif
 				
@@ -230,10 +230,10 @@ int main(void)
 			 } else { 
 					
 		      pkt=(Packet *)rcvd_payload;
-			     if (debug) {
+			    if (debug) {
 							debug_print("Rx ");
 							dump_packet(pkt);
-			      }
+					}
 		  }
 
 			//packet handling
@@ -242,9 +242,7 @@ int main(void)
 	      	case RREQ:
 						
 					    //create reverse path
-					    // r=find_next_hop(pkt->from,&rtable);
-								//	if (Dest_Addr==host.my_addr || Dest_Addr==0xFFFF ) { 
-							   if (pkt->from!=host.my_addr) { 
+					   if (pkt->from!=host.my_addr) { 
 									r_entry.dest_mac=pkt->from;
 									r_entry.next_mac=Src_Addr;
 									r_entry.hop_count=++pkt->hop_count;
@@ -307,46 +305,28 @@ int main(void)
 	        break;			
   
 				case DATA:			
-				  
-					//	debug_print("Get DATA data\r\n");
-					 					 
+		 					 
 						if (pkt->to==host.my_addr) { 
-				        sprintf((char *)output_array,"Get DATA data with seq=%d\r\n",pkt->data[2]);
+				        sprintf((char *)output_array,"Get DATA data with seq=%#x\r\n",pkt->data[2]);
 						    debug_print(output_array);
 							  debug_print("Send ACK back\r\n");
 							  pkt->data[3]=1; //isACK=1 
 							  send_message(DATA_ACK,pkt->from,host.my_addr,pkt->data,pkt->length);
-						  	blink_led(4,1,200); 
-							 
-							
-							
+						  	blink_led(4,1,200); 						
 							
 							 if (pkt->data[2]==0x13) {
 							    //finish
 								     dump_table(&rtable);	
 							    	blink_led(5,30,50); 
 								    setGPIO(4,1);
-								    						 
-							 } 
-
-							  
-							 
-							
-						 
+                 } 						 
 						} else { //not owner , so just forward
 									debug_print("Forward  DATA packet\r\n");
-						      //send_DATA(pkt->to,pkt->data,pkt->length,&rtable);
-							         //change 'from addr' along the path
+						       //change 'from addr' along the path
 							   	send_message(DATA,pkt->to,host.my_addr,pkt->data,pkt->length);
-							    
-							          // don't change 'from addr'
-							  //  send_message(DATA,SINK_ADDR,host.my_addr,,pkt->data,pkt->length);
+		
 				    }
-						
-
-							 
-						
-						
+								
 						 blink_led(5,2,50); 
 				  break;
 
@@ -355,13 +335,10 @@ int main(void)
 						if (pkt->to==host.my_addr) { 
 							  debug_print("I received ACK, then send data to the emitter dietcly\r\n");
 								RF_Tx(EMITTER_ADDR,pkt->data,5);
-							//sprintf((char *)output_array,"ACK from KING <---- %c,# %d\r\n",pkt->data[0],pkt->data[1]);
-						 //   debug_print(output_array);
 					
 						} else {
 								  debug_print("Forward ACK packet\r\n");
-						     // send_DATA_ACK(host.my_ID-1,pkt->data,pkt->length,&rtable);
-							  	send_message(DATA_ACK,pkt->to,host.my_addr,pkt->data,pkt->length);
+						     	send_message(DATA_ACK,pkt->to,host.my_addr,pkt->data,pkt->length);
 								
 				    }
 						
@@ -376,10 +353,7 @@ int main(void)
 						
 			 } //end switch
 	   }  //if rx available
-		
-
-		
-		
+				
 	}  //edn while(1)
 
 } //end main
@@ -395,24 +369,22 @@ void init()
 	Initial(MY_DEVICE_ADDR,TYPE, RADIO_CHANNEL, PAN_ID);
 	
   host.my_addr=MY_DEVICE_ADDR;
-	host.my_ID='@'; //init to '@':0x40  
+	host.my_ID='@'+MY_DEVICE_ADDR; //init to '@':0x40  
   unique_bid=(host.my_addr&0xff)<<8;
   renew_interval=RENEW_INTERVAL;
-
+	
+	 if (host.my_addr==SINK_ADDR) {
+	    renew_interval=RENEW_INTERVAL*2;
+	 }
 	
 }
-
-
 
 void debug_print(char *s)
 {
 	  int len=strlen(s);
 	  COM2_Tx((uint8_t *)s,len);
 	
-
-
 }
-
 
 void broadcast_RREQ(uint16_t addr)
 {  	
@@ -457,8 +429,6 @@ void send_message( uint8_t type,uint16_t to,uint16_t from, uint8_t *data, uint8_
  	if (r)    //unicast
      RF_Tx(r->next_mac,(uint8_t *)&packet,sizeof(Packet));
  
-  
-
 }
 
 
@@ -503,9 +473,6 @@ void send_RREP(Packet *p)
  	if (r) //unicast
 	  RF_Tx(r->next_mac,(uint8_t *)&packet,sizeof(Packet));
 	
-	 
- 
-
 }
 
 void dump_packet(Packet *p)
@@ -526,7 +493,6 @@ void dump_packet(Packet *p)
 }
 
 
-
 void show_myinfo()
 {
 
@@ -535,18 +501,6 @@ void show_myinfo()
 	
 }
 
-void update_table(Packet *pkt,Route_Table *tbl)
-{
-	 //update routing table 	
-
-	  Route r_entry={0};	
-    r_entry.hop_count=0;
-		r_entry.dest_mac=pkt->from;
-		r_entry.next_mac=pkt->from;
-		add_route(&r_entry,tbl);						
-	  //dump_table(tbl);
-
-}
 //------------------------------
 //Utility function
 //--------------------------------
@@ -563,9 +517,6 @@ void blink_led(int gpio_index,int count,uint32_t delay)
 		
   }		
 }
-
-
-
 
 //---------------------------------------------
 //Table Handling
@@ -584,27 +535,25 @@ uint8_t add_route(Route *route,Route_Table *tbl)
 	 Route *r;
 	 r=find_duplicate(route->dest_mac,route->next_mac,tbl);
 	 route->life_time=timer_count;	 
-	 if (r!=NULL) { //have existed , just update route info
-		  if (route->hop_count< r->hop_count) { 
+	 if (r!=NULL) { //already exist , just update route info
+		  if (route->hop_count<= r->hop_count) { 
 				 r->hop_count=route->hop_count;
+				 r->life_time=route->life_time;
         
       }				
-	 } else if((r=find_vacancy(tbl))!=NULL){//new entry
+	 } else if((r=find_vacancy(tbl))!=NULL){ //vacancy entry
 	
      //insert new entry at vacancy 
 		  memcpy(r,route,sizeof(Route));
 		 
-	 }else {
+	 }else { //new entry
 		 memcpy(&tbl->table[tbl->index],route,sizeof(Route));
      tbl->index++;
 	 }
 	 
    return tbl->index;
-  
-
+ 
 }
-
-
 
 Route * find_next_hop(uint16_t addr, Route_Table *tbl)
 {
@@ -625,17 +574,18 @@ Route * find_next_hop(uint16_t addr, Route_Table *tbl)
 void renew_route(Route_Table *tbl)
 {
    uint8_t i;
-  debug_print("renew_route\r\n");
-	debug_print(output_array);
+ 
+
    for (i=0;i<tbl->index;i++)
    {
           
-		 if (timer_count - tbl->table[i].life_time > 10000/T) //llfe time : 10 seconds
-          memset(&tbl->table[i],0,sizeof(Route));     
+		 if (timer_count > (tbl->table[i].life_time+LIFE_TIME)) { //llfe time : 10 seconds
+        
+		     sprintf((char *)output_array,"timer_count=%d,life_time=%d,LIFE_TIME=%d\r\n",timer_count,tbl->table[i].life_time,LIFE_TIME);
+		     debug_print(output_array);
+		     memset(&tbl->table[i],0,sizeof(Route));    
+		 }			 
    }
-
-  // if (debug) dump_table(tbl);
-
 
 }
 
@@ -671,7 +621,6 @@ Route * find_vacancy(Route_Table *tbl)
 }
 
 
-
 void dump_table(Route_Table *tbl)
 {
    uint8_t i;
@@ -681,8 +630,7 @@ void dump_table(Route_Table *tbl)
    {
 		 	sprintf((char *)output_array,"0x%x\t0x%x %d %d\r\n",tbl->table[i].dest_mac,tbl->table[i].next_mac,tbl->table[i].hop_count,tbl->table[i].life_time);
 	   	debug_print(output_array);
-     
-  
+      
    }
 
 }

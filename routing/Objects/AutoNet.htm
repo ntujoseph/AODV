@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\AutoNet.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\AutoNet.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Fri Jan 13 22:41:43 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Sat Jan 14 12:56:41 2017
 <BR><P>
 <H3>Maximum Stack Usage =        472 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2097,6 +2097,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;show_myinfo
 <LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_RREP
+<LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;renew_route
 <LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dump_table
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dump_packet
@@ -2857,7 +2858,7 @@ Global Symbols
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pow
 </UL>
 
-<P><STRONG><a name="[15e]"></a>add_route</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, main.o(i.add_route))
+<P><STRONG><a name="[15e]"></a>add_route</STRONG> (Thumb, 102 bytes, Stack size 16 bytes, main.o(i.add_route))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = add_route &rArr; __aeabi_memcpy
 </UL>
 <BR>[Calls]<UL><LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;find_vacancy
@@ -2971,7 +2972,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;add_route
 </UL>
 
-<P><STRONG><a name="[167]"></a>init</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, main.o(i.init))
+<P><STRONG><a name="[167]"></a>init</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, main.o(i.init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = init &rArr; Initial &rArr; COM2_Configuration &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Initial
@@ -2987,7 +2988,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[3c]"></a>main</STRONG> (Thumb, 852 bytes, Stack size 288 bytes, main.o(i.main))
+<P><STRONG><a name="[3c]"></a>main</STRONG> (Thumb, 840 bytes, Stack size 288 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 472 + Unknown Stack Size
 <LI>Call Chain = main &rArr; send_message &rArr; RF_Tx &rArr; Us2400Tx &rArr; Us2400WriteLongRegBlock &rArr; SPI_Proc &rArr; DMA_Init
 </UL>
@@ -3041,11 +3042,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Calculate_Speed
 </UL>
 
-<P><STRONG><a name="[16d]"></a>renew_route</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, main.o(i.renew_route))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = renew_route &rArr; debug_print &rArr; COM2_Tx &rArr; USART_ITConfig
+<P><STRONG><a name="[16d]"></a>renew_route</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, main.o(i.renew_route))
+<BR><BR>[Stack]<UL><LI>Max Depth = 136 + Unknown Stack Size
+<LI>Call Chain = renew_route &rArr; __2sprintf &rArr; _printf_char_common &rArr; __printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_print
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
+<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
