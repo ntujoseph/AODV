@@ -374,7 +374,7 @@ void init()
   renew_interval=RENEW_INTERVAL;
 	
 	 if (host.my_addr==SINK_ADDR) {
-	    renew_interval=RENEW_INTERVAL*2;
+	    renew_interval=RENEW_INTERVAL*3;
 	 }
 	
 }
