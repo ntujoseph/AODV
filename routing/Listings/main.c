@@ -105,9 +105,9 @@ void debug_print(char *s);
 void show_myinfo(void);
 void dump_packet(Packet *p);
 void broadcast_RREQ(uint16_t addr);
-void Re_broadcast_RREQ(Packet *p);
+void Re_broadcast_RREQ(const Packet *p);
 void send_message( uint8_t type,uint16_t to,uint16_t from, uint8_t *data, uint8_t size);
-void send_RREP(Packet *p);
+void send_RREP(const Packet *p);
 void send_DATA(uint16_t id, uint8_t *data, uint8_t size,Route_Table *tbl);
 void send_DATA_ACK(uint16_t id, uint8_t *data, uint8_t size,Route_Table *tbl);
 void init(void);
@@ -245,31 +245,46 @@ int main(void)
  
 	      	case RREQ:
 						
-		
+		    	//create reverse path
+					   if (pkt->from!=host.my_addr) { 
+									r_entry.dest_mac=pkt->from;
+									r_entry.next_mac=Src_Addr;
+									r_entry.hop_count=++pkt->hop_count;
+							   // r_entry.src_seq=pkt->id; //prevent loop
+					        add_route(&r_entry,&rtable);			
+                  dump_table(&rtable);
+						 }
 							
-							if (pkt->to==host.my_addr) {  //that's me! reply RREP to the original of RREP invoker 
+							if (pkt->to==host.my_addr) {  //that's to me! reply RREP to the original of RREP invoker 
 							   sprintf((char *)output_array,"Yes, I'm %#x, so replay RREP back to %#x\r\n",pkt->to,pkt->from);
 							   debug_print(output_array);
 							   send_RREP(pkt);
-						 	} else {		
-								  	
+							   
+						 	} else { 
+				  	
 					     //do i know the dest. addr ? 
 								r=find_next_hop(pkt->to,&rtable);	
-								if (r==NULL) { 
+								if (r==NULL) { //no, I don't know the route to SINK device
 									
 									if ((pkt->id>>16)==host.my_addr) {  //prevent loop (broadcast storm)
-										   debug_print("skip it\r\n");																						
+										   debug_print("this broadcast caused by me , so skip it\r\n");																						
 								  } else {
 										
-									//   Re_broadcast_RREQ(pkt);				
-                      								
-                      r=find_next_hop(pkt->from,&rtable);	
+										#if 0
+										
+									  Re_broadcast_RREQ(pkt);				
+                    #else  					
+										   // to prevent loop in the downstream tree, joseph ,Jan 16, 2017 
+                      r=find_next_hop(pkt->from,&rtable);	 
                      	if (r==NULL || (r!=NULL && r->src_seq!=pkt->id)) {
 												    sprintf((char *)output_array,"%#x not found, Re_broadcast_RREQ\r\n",pkt->to);
-							 	             debug_print(output_array);						
-													 	 Re_broadcast_RREQ(pkt);		//if not found, broadcast RREQ 		
+							 	             debug_print(output_array);				
+                             pkt->hop_count++;												
+												     r_entry.src_seq=pkt->id; //to prevent loop , but need to broadcast at least once
+													 	 Re_broadcast_RREQ(pkt);		
  										 	   
 										  }
+										#endif	
 										
 									}									
 			 
@@ -281,20 +296,9 @@ int main(void)
 									
 								   
 								}
-						  }
-      
-							 //-----joseph move to here, Jan 16, 2017----------------------------
-							//create reverse path
-					   if (pkt->from!=host.my_addr) { 
-									r_entry.dest_mac=pkt->from;
-									r_entry.next_mac=Src_Addr;
-									r_entry.hop_count=++pkt->hop_count;
-							    r_entry.src_seq=pkt->id; //prevent loop
-					        add_route(&r_entry,&rtable);			
-                  dump_table(&rtable);
-								 }
-				  //-----------------------------------------
-					
+						  
+
+							}
 		
 					break;
 				
@@ -417,11 +421,11 @@ void broadcast_RREQ(uint16_t addr)
 }
 
 
-void Re_broadcast_RREQ(Packet *p)
+void Re_broadcast_RREQ(const Packet *p)
 {  	
 
   	//broadcasting
-	p->hop_count++;
+	
   RF_Tx(0xFFFF,(uint8_t *)p,sizeof(Packet));
 
 }
@@ -469,13 +473,12 @@ void send_DATA_ACK(uint16_t id, uint8_t *data, uint8_t size,Route_Table *tbl)
 }
 
 
-void send_RREP(Packet *p)
+void send_RREP(const Packet *p)
 {
   Route *r;
 	Packet packet={0};
 
  
-  
 	packet.type=RREP;
 	packet.to=p->from;
 	packet.from=p->to;
