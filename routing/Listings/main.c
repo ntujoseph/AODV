@@ -271,7 +271,7 @@ int main(void)
 										
 									//   Re_broadcast_RREQ(pkt);				
                       								
-                      r=find_next_hop(Src_Addr,&rtable);	
+                      r=find_next_hop(pkt->from,&rtable);	
                      	if (r==NULL || (r!=NULL && r->src_seq!=pkt->id)) {
 												    sprintf((char *)output_array,"%#x not found, Re_broadcast_RREQ\r\n",pkt->to);
 							 	             debug_print(output_array);						

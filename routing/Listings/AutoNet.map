@@ -48,8 +48,8 @@ Section Cross References
     main.o(i.main) refers to main.o(i.renew_route) for renew_route
     main.o(i.main) refers to txrx.o(.text) for RF_Rx
     main.o(i.main) refers to autonetapis.o(.text) for getDestAddr
-    main.o(i.main) refers to noretval__2sprintf.o(.text) for __2sprintf
     main.o(i.main) refers to main.o(i.dump_table) for dump_table
+    main.o(i.main) refers to noretval__2sprintf.o(.text) for __2sprintf
     main.o(i.main) refers to main.o(i.broadcast_RREQ) for broadcast_RREQ
     main.o(i.main) refers to main.o(i.send_message) for send_message
     main.o(i.main) refers to main.o(i.dump_packet) for dump_packet
@@ -1102,53 +1102,53 @@ Image Symbol Table
     i.init                                   0x08009408   Section        0  main.o(i.init)
     i.init_table                             0x08009440   Section        0  main.o(i.init_table)
     i.main                                   0x08009458   Section        0  main.o(i.main)
-    i.pow                                    0x080099d8   Section        0  pow.o(i.pow)
-    i.renew_route                            0x0800a3d4   Section        0  main.o(i.renew_route)
-    i.send_RREP                              0x0800a474   Section        0  main.o(i.send_RREP)
-    i.send_message                           0x0800a4ec   Section        0  main.o(i.send_message)
-    i.show_myinfo                            0x0800a53c   Section        0  main.o(i.show_myinfo)
-    i.sin                                    0x0800a57c   Section        0  sin.o(i.sin)
-    i.sqrt                                   0x0800a618   Section        0  sqrt.o(i.sqrt)
-    i.update_life_time                       0x0800a660   Section        0  main.o(i.update_life_time)
-    x$fpl$dleqf                              0x0800a694   Section      100  dlef.o(x$fpl$dleqf)
-    x$fpl$drleqf                             0x0800a6f8   Section      104  drlef.o(x$fpl$drleqf)
-    x$fpl$fadd                               0x0800a760   Section      140  faddsub.o(x$fpl$fadd)
-    _fadd1                                   0x0800a76d   Thumb Code     0  faddsub.o(x$fpl$fadd)
-    x$fpl$feqf                               0x0800a7ec   Section       84  feqf.o(x$fpl$feqf)
-    x$fpl$fleqf                              0x0800a840   Section       84  flef.o(x$fpl$fleqf)
-    x$fpl$fmul                               0x0800a894   Section      176  fmul.o(x$fpl$fmul)
-    x$fpl$frleqf                             0x0800a944   Section       88  frlef.o(x$fpl$frleqf)
-    x$fpl$fsub                               0x0800a99c   Section      208  faddsub.o(x$fpl$fsub)
-    _fsub1                                   0x0800a9a9   Thumb Code     0  faddsub.o(x$fpl$fsub)
-    .constdata                               0x0800aa6c   Section       40  _printf_hex_int.o(.constdata)
-    x$fpl$usenofp                            0x0800aa6c   Section        0  usenofp.o(x$fpl$usenofp)
-    uc_hextab                                0x0800aa6c   Data          20  _printf_hex_int.o(.constdata)
-    lc_hextab                                0x0800aa80   Data          20  _printf_hex_int.o(.constdata)
-    .constdata                               0x0800aa94   Section       17  __printf_flags.o(.constdata)
-    maptable                                 0x0800aa94   Data          17  __printf_flags.o(.constdata)
-    .constdata                               0x0800aaa5   Section      128  ddiv.o(.constdata)
-    ddiv_reciptbl                            0x0800aaa5   Data         128  ddiv.o(.constdata)
-    .constdata                               0x0800ab25   Section       64  fdiv.o(.constdata)
-    fdiv_tab                                 0x0800ab25   Data          64  fdiv.o(.constdata)
-    .constdata                               0x0800ab68   Section      136  pow.o(.constdata)
-    bp                                       0x0800ab68   Data          16  pow.o(.constdata)
-    dp_h                                     0x0800ab78   Data          16  pow.o(.constdata)
-    dp_l                                     0x0800ab88   Data          16  pow.o(.constdata)
-    L                                        0x0800ab98   Data          48  pow.o(.constdata)
-    P                                        0x0800abc8   Data          40  pow.o(.constdata)
-    .constdata                               0x0800abf0   Section      152  atan.o(.constdata)
-    atanhi                                   0x0800abf0   Data          32  atan.o(.constdata)
-    atanlo                                   0x0800ac10   Data          32  atan.o(.constdata)
-    aTodd                                    0x0800ac30   Data          40  atan.o(.constdata)
-    aTeven                                   0x0800ac58   Data          48  atan.o(.constdata)
-    .constdata                               0x0800ac88   Section       48  cos_i.o(.constdata)
-    C                                        0x0800ac88   Data          48  cos_i.o(.constdata)
-    .constdata                               0x0800acb8   Section        8  qnan.o(.constdata)
-    .constdata                               0x0800acc0   Section      200  rred.o(.constdata)
-    pio2s                                    0x0800acc0   Data          48  rred.o(.constdata)
-    twooverpi                                0x0800acf0   Data         152  rred.o(.constdata)
-    .constdata                               0x0800ad88   Section       40  sin_i.o(.constdata)
-    S                                        0x0800ad88   Data          40  sin_i.o(.constdata)
+    i.pow                                    0x080099a8   Section        0  pow.o(i.pow)
+    i.renew_route                            0x0800a3a4   Section        0  main.o(i.renew_route)
+    i.send_RREP                              0x0800a444   Section        0  main.o(i.send_RREP)
+    i.send_message                           0x0800a4bc   Section        0  main.o(i.send_message)
+    i.show_myinfo                            0x0800a50c   Section        0  main.o(i.show_myinfo)
+    i.sin                                    0x0800a54c   Section        0  sin.o(i.sin)
+    i.sqrt                                   0x0800a5e8   Section        0  sqrt.o(i.sqrt)
+    i.update_life_time                       0x0800a630   Section        0  main.o(i.update_life_time)
+    x$fpl$dleqf                              0x0800a664   Section      100  dlef.o(x$fpl$dleqf)
+    x$fpl$drleqf                             0x0800a6c8   Section      104  drlef.o(x$fpl$drleqf)
+    x$fpl$fadd                               0x0800a730   Section      140  faddsub.o(x$fpl$fadd)
+    _fadd1                                   0x0800a73d   Thumb Code     0  faddsub.o(x$fpl$fadd)
+    x$fpl$feqf                               0x0800a7bc   Section       84  feqf.o(x$fpl$feqf)
+    x$fpl$fleqf                              0x0800a810   Section       84  flef.o(x$fpl$fleqf)
+    x$fpl$fmul                               0x0800a864   Section      176  fmul.o(x$fpl$fmul)
+    x$fpl$frleqf                             0x0800a914   Section       88  frlef.o(x$fpl$frleqf)
+    x$fpl$fsub                               0x0800a96c   Section      208  faddsub.o(x$fpl$fsub)
+    _fsub1                                   0x0800a979   Thumb Code     0  faddsub.o(x$fpl$fsub)
+    .constdata                               0x0800aa3c   Section       40  _printf_hex_int.o(.constdata)
+    x$fpl$usenofp                            0x0800aa3c   Section        0  usenofp.o(x$fpl$usenofp)
+    uc_hextab                                0x0800aa3c   Data          20  _printf_hex_int.o(.constdata)
+    lc_hextab                                0x0800aa50   Data          20  _printf_hex_int.o(.constdata)
+    .constdata                               0x0800aa64   Section       17  __printf_flags.o(.constdata)
+    maptable                                 0x0800aa64   Data          17  __printf_flags.o(.constdata)
+    .constdata                               0x0800aa75   Section      128  ddiv.o(.constdata)
+    ddiv_reciptbl                            0x0800aa75   Data         128  ddiv.o(.constdata)
+    .constdata                               0x0800aaf5   Section       64  fdiv.o(.constdata)
+    fdiv_tab                                 0x0800aaf5   Data          64  fdiv.o(.constdata)
+    .constdata                               0x0800ab38   Section      136  pow.o(.constdata)
+    bp                                       0x0800ab38   Data          16  pow.o(.constdata)
+    dp_h                                     0x0800ab48   Data          16  pow.o(.constdata)
+    dp_l                                     0x0800ab58   Data          16  pow.o(.constdata)
+    L                                        0x0800ab68   Data          48  pow.o(.constdata)
+    P                                        0x0800ab98   Data          40  pow.o(.constdata)
+    .constdata                               0x0800abc0   Section      152  atan.o(.constdata)
+    atanhi                                   0x0800abc0   Data          32  atan.o(.constdata)
+    atanlo                                   0x0800abe0   Data          32  atan.o(.constdata)
+    aTodd                                    0x0800ac00   Data          40  atan.o(.constdata)
+    aTeven                                   0x0800ac28   Data          48  atan.o(.constdata)
+    .constdata                               0x0800ac58   Section       48  cos_i.o(.constdata)
+    C                                        0x0800ac58   Data          48  cos_i.o(.constdata)
+    .constdata                               0x0800ac88   Section        8  qnan.o(.constdata)
+    .constdata                               0x0800ac90   Section      200  rred.o(.constdata)
+    pio2s                                    0x0800ac90   Data          48  rred.o(.constdata)
+    twooverpi                                0x0800acc0   Data         152  rred.o(.constdata)
+    .constdata                               0x0800ad58   Section       40  sin_i.o(.constdata)
+    S                                        0x0800ad58   Data          40  sin_i.o(.constdata)
     .data                                    0x20000000   Section       28  main.o(.data)
     .data                                    0x2000001c   Section       36  st.o(.data)
     .data                                    0x20000040   Section       17  txrx.o(.data)
@@ -1816,35 +1816,35 @@ Image Symbol Table
     find_vacancy                             0x080093dd   Thumb Code    42  main.o(i.find_vacancy)
     init                                     0x08009409   Thumb Code    42  main.o(i.init)
     init_table                               0x08009441   Thumb Code    24  main.o(i.init_table)
-    main                                     0x08009459   Thumb Code   884  main.o(i.main)
-    pow                                      0x080099d9   Thumb Code  2548  pow.o(i.pow)
-    renew_route                              0x0800a3d5   Thumb Code   100  main.o(i.renew_route)
-    send_RREP                                0x0800a475   Thumb Code    80  main.o(i.send_RREP)
-    send_message                             0x0800a4ed   Thumb Code    76  main.o(i.send_message)
-    show_myinfo                              0x0800a53d   Thumb Code    24  main.o(i.show_myinfo)
-    sin                                      0x0800a57d   Thumb Code   146  sin.o(i.sin)
-    sqrt                                     0x0800a619   Thumb Code    66  sqrt.o(i.sqrt)
-    update_life_time                         0x0800a661   Thumb Code    46  main.o(i.update_life_time)
-    __aeabi_cdcmple                          0x0800a695   Thumb Code     0  dlef.o(x$fpl$dleqf)
-    _dcmple                                  0x0800a695   Thumb Code    94  dlef.o(x$fpl$dleqf)
-    __aeabi_cdrcmple                         0x0800a6f9   Thumb Code     0  drlef.o(x$fpl$drleqf)
-    _drcmple                                 0x0800a6f9   Thumb Code   100  drlef.o(x$fpl$drleqf)
-    __aeabi_fadd                             0x0800a761   Thumb Code     0  faddsub.o(x$fpl$fadd)
-    _fadd                                    0x0800a761   Thumb Code   134  faddsub.o(x$fpl$fadd)
-    __aeabi_cfcmpeq                          0x0800a7ed   Thumb Code     0  feqf.o(x$fpl$feqf)
-    _fcmpeq                                  0x0800a7ed   Thumb Code    78  feqf.o(x$fpl$feqf)
-    __aeabi_cfcmple                          0x0800a841   Thumb Code     0  flef.o(x$fpl$fleqf)
-    _fcmple                                  0x0800a841   Thumb Code    78  flef.o(x$fpl$fleqf)
-    __aeabi_fmul                             0x0800a895   Thumb Code     0  fmul.o(x$fpl$fmul)
-    _fmul                                    0x0800a895   Thumb Code   172  fmul.o(x$fpl$fmul)
-    __aeabi_cfrcmple                         0x0800a945   Thumb Code     0  frlef.o(x$fpl$frleqf)
-    _frcmple                                 0x0800a945   Thumb Code    84  frlef.o(x$fpl$frleqf)
-    __aeabi_fsub                             0x0800a99d   Thumb Code     0  faddsub.o(x$fpl$fsub)
-    _fsub                                    0x0800a99d   Thumb Code   204  faddsub.o(x$fpl$fsub)
-    __I$use$fp                               0x0800aa6c   Number         0  usenofp.o(x$fpl$usenofp)
-    __mathlib_zero                           0x0800acb8   Data           8  qnan.o(.constdata)
-    Region$$Table$$Base                      0x0800adb0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800add0   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x08009459   Thumb Code   842  main.o(i.main)
+    pow                                      0x080099a9   Thumb Code  2548  pow.o(i.pow)
+    renew_route                              0x0800a3a5   Thumb Code   100  main.o(i.renew_route)
+    send_RREP                                0x0800a445   Thumb Code    80  main.o(i.send_RREP)
+    send_message                             0x0800a4bd   Thumb Code    76  main.o(i.send_message)
+    show_myinfo                              0x0800a50d   Thumb Code    24  main.o(i.show_myinfo)
+    sin                                      0x0800a54d   Thumb Code   146  sin.o(i.sin)
+    sqrt                                     0x0800a5e9   Thumb Code    66  sqrt.o(i.sqrt)
+    update_life_time                         0x0800a631   Thumb Code    46  main.o(i.update_life_time)
+    __aeabi_cdcmple                          0x0800a665   Thumb Code     0  dlef.o(x$fpl$dleqf)
+    _dcmple                                  0x0800a665   Thumb Code    94  dlef.o(x$fpl$dleqf)
+    __aeabi_cdrcmple                         0x0800a6c9   Thumb Code     0  drlef.o(x$fpl$drleqf)
+    _drcmple                                 0x0800a6c9   Thumb Code   100  drlef.o(x$fpl$drleqf)
+    __aeabi_fadd                             0x0800a731   Thumb Code     0  faddsub.o(x$fpl$fadd)
+    _fadd                                    0x0800a731   Thumb Code   134  faddsub.o(x$fpl$fadd)
+    __aeabi_cfcmpeq                          0x0800a7bd   Thumb Code     0  feqf.o(x$fpl$feqf)
+    _fcmpeq                                  0x0800a7bd   Thumb Code    78  feqf.o(x$fpl$feqf)
+    __aeabi_cfcmple                          0x0800a811   Thumb Code     0  flef.o(x$fpl$fleqf)
+    _fcmple                                  0x0800a811   Thumb Code    78  flef.o(x$fpl$fleqf)
+    __aeabi_fmul                             0x0800a865   Thumb Code     0  fmul.o(x$fpl$fmul)
+    _fmul                                    0x0800a865   Thumb Code   172  fmul.o(x$fpl$fmul)
+    __aeabi_cfrcmple                         0x0800a915   Thumb Code     0  frlef.o(x$fpl$frleqf)
+    _frcmple                                 0x0800a915   Thumb Code    84  frlef.o(x$fpl$frleqf)
+    __aeabi_fsub                             0x0800a96d   Thumb Code     0  faddsub.o(x$fpl$fsub)
+    _fsub                                    0x0800a96d   Thumb Code   204  faddsub.o(x$fpl$fsub)
+    __I$use$fp                               0x0800aa3c   Number         0  usenofp.o(x$fpl$usenofp)
+    __mathlib_zero                           0x0800ac88   Data           8  qnan.o(.constdata)
+    Region$$Table$$Base                      0x0800ad80   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0800ada0   Number         0  anon$$obj.o(Region$$Table)
     renew_interval                           0x20000000   Data           2  main.o(.data)
     debug                                    0x20000004   Data           4  main.o(.data)
     host                                     0x20000008   Data           4  main.o(.data)
@@ -2021,9 +2021,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000c1
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000afc8, Max: 0x00010000, ABSOLUTE, COMPRESSED[0x0000ae38])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000af98, Max: 0x00010000, ABSOLUTE, COMPRESSED[0x0000ae04])
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x0000add0, Max: 0x00010000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x0000ada0, Max: 0x00010000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2194,39 +2194,39 @@ Memory Map of the image
     0x08009406   0x00000002   PAD
     0x08009408   0x00000038   Code   RO           13    i.init              main.o
     0x08009440   0x00000018   Code   RO           14    i.init_table        main.o
-    0x08009458   0x00000580   Code   RO           15    i.main              main.o
-    0x080099d8   0x000009fc   Code   RO         1356    i.pow               m_ps.l(pow.o)
-    0x0800a3d4   0x000000a0   Code   RO           16    i.renew_route       main.o
-    0x0800a474   0x00000078   Code   RO           19    i.send_RREP         main.o
-    0x0800a4ec   0x00000050   Code   RO           20    i.send_message      main.o
-    0x0800a53c   0x00000040   Code   RO           21    i.show_myinfo       main.o
-    0x0800a57c   0x0000009c   Code   RO         1366    i.sin               m_ps.l(sin.o)
-    0x0800a618   0x00000048   Code   RO         1374    i.sqrt              m_ps.l(sqrt.o)
-    0x0800a660   0x00000034   Code   RO           22    i.update_life_time  main.o
-    0x0800a694   0x00000064   Code   RO         1312    x$fpl$dleqf         fz_ps.l(dlef.o)
-    0x0800a6f8   0x00000068   Code   RO         1401    x$fpl$drleqf        fz_ps.l(drlef.o)
-    0x0800a760   0x0000008c   Code   RO         1318    x$fpl$fadd          fz_ps.l(faddsub.o)
-    0x0800a7ec   0x00000054   Code   RO         1327    x$fpl$feqf          fz_ps.l(feqf.o)
-    0x0800a840   0x00000054   Code   RO         1333    x$fpl$fleqf         fz_ps.l(flef.o)
-    0x0800a894   0x000000b0   Code   RO         1335    x$fpl$fmul          fz_ps.l(fmul.o)
-    0x0800a944   0x00000058   Code   RO         1337    x$fpl$frleqf        fz_ps.l(frlef.o)
-    0x0800a99c   0x000000d0   Code   RO         1320    x$fpl$fsub          fz_ps.l(faddsub.o)
-    0x0800aa6c   0x00000000   Code   RO         1409    x$fpl$usenofp       fz_ps.l(usenofp.o)
-    0x0800aa6c   0x00000028   Data   RO         1240    .constdata          c_p.l(_printf_hex_int.o)
-    0x0800aa94   0x00000011   Data   RO         1258    .constdata          c_p.l(__printf_flags.o)
-    0x0800aaa5   0x00000080   Data   RO         1304    .constdata          fz_ps.l(ddiv.o)
-    0x0800ab25   0x00000040   Data   RO         1325    .constdata          fz_ps.l(fdiv.o)
-    0x0800ab65   0x00000003   PAD
-    0x0800ab68   0x00000088   Data   RO         1357    .constdata          m_ps.l(pow.o)
-    0x0800abf0   0x00000098   Data   RO         1412    .constdata          m_ps.l(atan.o)
-    0x0800ac88   0x00000030   Data   RO         1421    .constdata          m_ps.l(cos_i.o)
-    0x0800acb8   0x00000008   Data   RO         1441    .constdata          m_ps.l(qnan.o)
-    0x0800acc0   0x000000c8   Data   RO         1444    .constdata          m_ps.l(rred.o)
-    0x0800ad88   0x00000028   Data   RO         1450    .constdata          m_ps.l(sin_i.o)
-    0x0800adb0   0x00000020   Data   RO         1665    Region$$Table       anon$$obj.o
+    0x08009458   0x00000550   Code   RO           15    i.main              main.o
+    0x080099a8   0x000009fc   Code   RO         1356    i.pow               m_ps.l(pow.o)
+    0x0800a3a4   0x000000a0   Code   RO           16    i.renew_route       main.o
+    0x0800a444   0x00000078   Code   RO           19    i.send_RREP         main.o
+    0x0800a4bc   0x00000050   Code   RO           20    i.send_message      main.o
+    0x0800a50c   0x00000040   Code   RO           21    i.show_myinfo       main.o
+    0x0800a54c   0x0000009c   Code   RO         1366    i.sin               m_ps.l(sin.o)
+    0x0800a5e8   0x00000048   Code   RO         1374    i.sqrt              m_ps.l(sqrt.o)
+    0x0800a630   0x00000034   Code   RO           22    i.update_life_time  main.o
+    0x0800a664   0x00000064   Code   RO         1312    x$fpl$dleqf         fz_ps.l(dlef.o)
+    0x0800a6c8   0x00000068   Code   RO         1401    x$fpl$drleqf        fz_ps.l(drlef.o)
+    0x0800a730   0x0000008c   Code   RO         1318    x$fpl$fadd          fz_ps.l(faddsub.o)
+    0x0800a7bc   0x00000054   Code   RO         1327    x$fpl$feqf          fz_ps.l(feqf.o)
+    0x0800a810   0x00000054   Code   RO         1333    x$fpl$fleqf         fz_ps.l(flef.o)
+    0x0800a864   0x000000b0   Code   RO         1335    x$fpl$fmul          fz_ps.l(fmul.o)
+    0x0800a914   0x00000058   Code   RO         1337    x$fpl$frleqf        fz_ps.l(frlef.o)
+    0x0800a96c   0x000000d0   Code   RO         1320    x$fpl$fsub          fz_ps.l(faddsub.o)
+    0x0800aa3c   0x00000000   Code   RO         1409    x$fpl$usenofp       fz_ps.l(usenofp.o)
+    0x0800aa3c   0x00000028   Data   RO         1240    .constdata          c_p.l(_printf_hex_int.o)
+    0x0800aa64   0x00000011   Data   RO         1258    .constdata          c_p.l(__printf_flags.o)
+    0x0800aa75   0x00000080   Data   RO         1304    .constdata          fz_ps.l(ddiv.o)
+    0x0800aaf5   0x00000040   Data   RO         1325    .constdata          fz_ps.l(fdiv.o)
+    0x0800ab35   0x00000003   PAD
+    0x0800ab38   0x00000088   Data   RO         1357    .constdata          m_ps.l(pow.o)
+    0x0800abc0   0x00000098   Data   RO         1412    .constdata          m_ps.l(atan.o)
+    0x0800ac58   0x00000030   Data   RO         1421    .constdata          m_ps.l(cos_i.o)
+    0x0800ac88   0x00000008   Data   RO         1441    .constdata          m_ps.l(qnan.o)
+    0x0800ac90   0x000000c8   Data   RO         1444    .constdata          m_ps.l(rred.o)
+    0x0800ad58   0x00000028   Data   RO         1450    .constdata          m_ps.l(sin_i.o)
+    0x0800ad80   0x00000020   Data   RO         1665    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00001938, Max: 0x00002000, ABSOLUTE, COMPRESSED[0x00000068])
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00001938, Max: 0x00002000, ABSOLUTE, COMPRESSED[0x00000064])
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2268,10 +2268,10 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      2746        862          0         28        492      16814   main.o
+      2698        856          0         28        492      16734   main.o
 
     ----------------------------------------------------------------------
-      2752        862         32         28        492      16814   Object Totals
+      2704        856         32         28        492      16734   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          6          0          0          0          0          0   (incl. Padding)
 
@@ -2417,15 +2417,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     43436       2972       1060        504       5952     386520   Grand Totals
-     43436       2972       1060        104       5952     386520   ELF Image Totals (compressed)
-     43436       2972       1060        104          0          0   ROM Totals
+     43388       2966       1060        504       5952     386440   Grand Totals
+     43388       2966       1060        100       5952     386440   ELF Image Totals (compressed)
+     43388       2966       1060        100          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                44496 (  43.45kB)
+    Total RO  Size (Code + RO Data)                44448 (  43.41kB)
     Total RW  Size (RW Data + ZI Data)              6456 (   6.30kB)
-    Total ROM Size (Code + RO Data + RW Data)      44600 (  43.55kB)
+    Total ROM Size (Code + RO Data + RW Data)      44548 (  43.50kB)
 
 ==============================================================================
 
