@@ -18,7 +18,7 @@
 #include "autonet.h"
 
 //--------------------
-#define MY_DEVICE_ADDR  0x0012 //!!!!! SHOULD set different mac addr  !!!!!!!!
+#define MY_DEVICE_ADDR  0x0007//!!!!! SHOULD set different mac addr  !!!!!!!!
 #define SINK_ADDR 0x0012
 #define EMITTER_ADDR 0x0001   // periodically sent  (200ms), set by TA
 #define DEBUG 1
@@ -60,7 +60,7 @@ typedef struct _host
 typedef struct _packet
 {
   uint8_t type;
-  uint16_t id;
+  uint32_t id;
   uint16_t to; //to 
   uint16_t from; //from
  	uint16_t hop_count;
@@ -77,6 +77,7 @@ typedef struct _route {
   uint16_t next_mac;
 	uint16_t hop_count;
 	uint16_t life_time;
+	uint32_t src_seq;
 	
 }Route;
 
@@ -95,7 +96,7 @@ char output_array[PRINT_BUFSIZE]={0};
 Route_Table rtable;
 uint16_t Dest_Addr;
 uint16_t Src_Addr;
-uint16_t unique_bid;
+uint32_t unique_bid;
 uint16_t timer_count=0;
 uint16_t renew_routing=0;
 //Function list
@@ -115,6 +116,7 @@ void init(void);
 
 void init_table(Route_Table *tbl);
 uint8_t add_route(Route *route,Route_Table *tbl);
+void update_life_time(uint16_t dest, Route_Table *tbl);
 void dump_table(Route_Table *tbl);
 Route * find_next_hop(uint16_t addr, Route_Table *tbl);
 Route * find_duplicate(uint16_t addr1,uint16_t addr2,Route_Table *tbl);
@@ -235,6 +237,8 @@ int main(void)
 							dump_packet(pkt);
 					}
 		  }
+			 
+		  update_life_time(Src_Addr,&rtable);
 
 			//packet handling
 			switch (pkt->type) {
@@ -246,6 +250,7 @@ int main(void)
 									r_entry.dest_mac=pkt->from;
 									r_entry.next_mac=Src_Addr;
 									r_entry.hop_count=++pkt->hop_count;
+							    r_entry.src_seq=pkt->id; //prevent loop
 					        add_route(&r_entry,&rtable);			
                   dump_table(&rtable);
 								 }
@@ -258,14 +263,22 @@ int main(void)
 								  	
 					     //do i know the dest. addr ? 
 								r=find_next_hop(pkt->to,&rtable);	
-								if (r==NULL) { //if no, broadcast RREQ 
+								if (r==NULL) { //if not found, broadcast RREQ 
 									
-									if (pkt->id!=unique_bid) {  //prevent loop (broadcast storm)
-										  sprintf((char *)output_array,"%#x not found, Re_broadcast_RREQ\r\n",pkt->to);
-							 	      debug_print(output_array);
- 										 	Re_broadcast_RREQ(pkt);											  
-									}	else {
-									   debug_print("skip it\r\n");
+									if ((pkt->id>>16)==host.my_addr) {  //prevent loop (broadcast storm)
+										   debug_print("skip it\r\n");																						
+								  } else {
+										
+									   Re_broadcast_RREQ(pkt);				
+                      /*										
+                      r=find_next_hop(Src_Addr,&rtable);	
+                     	if (r==NULL || (r!=NULL && r->src_seq!=pkt->id)) {
+												    sprintf((char *)output_array,"%#x not found, Re_broadcast_RREQ\r\n",pkt->to);
+							 	             debug_print(output_array);						
+													 	 Re_broadcast_RREQ(pkt);				
+ 										 	   
+										  }
+										*/
 									}									
 			 
 								} else {  //yes, I know the route
@@ -289,6 +302,7 @@ int main(void)
 						r_entry.dest_mac=pkt->from;
 						r_entry.next_mac=Src_Addr;
 						r_entry.hop_count=++pkt->hop_count;
+				    
 						add_route(&r_entry,&rtable);			
             dump_table(&rtable);			
 						
@@ -326,7 +340,7 @@ int main(void)
 							   	send_message(DATA,pkt->to,host.my_addr,pkt->data,pkt->length);
 		
 				    }
-								
+						
 						 blink_led(5,2,50); 
 				  break;
 
@@ -370,12 +384,10 @@ void init()
 	
   host.my_addr=MY_DEVICE_ADDR;
 	host.my_ID='@'+MY_DEVICE_ADDR; //init to '@':0x40  
-  unique_bid=(host.my_addr&0xff)<<8;
+  unique_bid=(host.my_addr&0xff)<<16; //unique_bid= host.my_ID (16bit) + seq no. (16bit)
   renew_interval=RENEW_INTERVAL;
+
 	
-	 if (host.my_addr==SINK_ADDR) {
-	    renew_interval=RENEW_INTERVAL*3;
-	 }
 	
 }
 
@@ -392,7 +404,7 @@ void broadcast_RREQ(uint16_t addr)
 	 Packet packet={0};
 	 if (addr==host.my_addr) return;
 	 unique_bid++;
-   packet.id=unique_bid; //unique broadcast ID
+	 packet.id=unique_bid; //unique broadcast ID
 	 packet.type=RREQ; //route request
 	 packet.to=addr; // you want to find the "addr"
 	 packet.from=host.my_addr;	
@@ -536,7 +548,7 @@ uint8_t add_route(Route *route,Route_Table *tbl)
 	 r=find_duplicate(route->dest_mac,route->next_mac,tbl);
 	 route->life_time=timer_count;	 
 	 if (r!=NULL) { //already exist , just update route info
-		  if (route->hop_count<= r->hop_count) { 
+		  if (route->hop_count< r->hop_count) { 
 				 r->hop_count=route->hop_count;
 				 r->life_time=route->life_time;
         
@@ -571,10 +583,28 @@ Route * find_next_hop(uint16_t addr, Route_Table *tbl)
 
 }
 
+void update_life_time(uint16_t dest, Route_Table *tbl)
+{
+
+  uint8_t i;
+
+   for (i=0;i<tbl->index;i++)
+   {
+       
+       if (dest==tbl->table[i].dest_mac) 
+				  tbl->table[i].life_time=timer_count;
+           
+   }
+
+
+}
+
+
+
 void renew_route(Route_Table *tbl)
 {
    uint8_t i;
- 
+
 
    for (i=0;i<tbl->index;i++)
    {
@@ -583,10 +613,10 @@ void renew_route(Route_Table *tbl)
         
 		     sprintf((char *)output_array,"timer_count=%d,life_time=%d,LIFE_TIME=%d\r\n",timer_count,tbl->table[i].life_time,LIFE_TIME);
 		     debug_print(output_array);
-		     memset(&tbl->table[i],0,sizeof(Route));    
+			   memset(&tbl->table[i],0,sizeof(Route));    
 		 }			 
    }
-
+     if (debug) dump_table(&rtable);		
 }
 
 
@@ -624,11 +654,11 @@ Route * find_vacancy(Route_Table *tbl)
 void dump_table(Route_Table *tbl)
 {
    uint8_t i;
-   debug_print("dest_mac  next_mac hop_count life_time\r\n");    
+   debug_print("dest_mac  next_mac hop_count life_time Src_seq\r\n");    
 	
    for (i=0;i<tbl->index;i++)
    {
-		 	sprintf((char *)output_array,"0x%x\t0x%x %d %d\r\n",tbl->table[i].dest_mac,tbl->table[i].next_mac,tbl->table[i].hop_count,tbl->table[i].life_time);
+		 	sprintf((char *)output_array,"0x%x\t0x%x %d %d %#x\r\n",tbl->table[i].dest_mac,tbl->table[i].next_mac,tbl->table[i].hop_count,tbl->table[i].life_time,tbl->table[i].src_seq);
 	   	debug_print(output_array);
       
    }
