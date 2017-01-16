@@ -245,15 +245,7 @@ int main(void)
  
 	      	case RREQ:
 						
-					    //create reverse path
-					   if (pkt->from!=host.my_addr) { 
-									r_entry.dest_mac=pkt->from;
-									r_entry.next_mac=Src_Addr;
-									r_entry.hop_count=++pkt->hop_count;
-							    r_entry.src_seq=pkt->id; //prevent loop
-					        add_route(&r_entry,&rtable);			
-                  dump_table(&rtable);
-								 }
+		
 							
 							if (pkt->to==host.my_addr) {  //that's me! reply RREP to the original of RREP invoker 
 							   sprintf((char *)output_array,"Yes, I'm %#x, so replay RREP back to %#x\r\n",pkt->to,pkt->from);
@@ -290,8 +282,18 @@ int main(void)
 								   
 								}
 						  }
-
-				
+      
+							 //-----joseph move to here, Jan 16, 2017----------------------------
+							//create reverse path
+					   if (pkt->from!=host.my_addr) { 
+									r_entry.dest_mac=pkt->from;
+									r_entry.next_mac=Src_Addr;
+									r_entry.hop_count=++pkt->hop_count;
+							    r_entry.src_seq=pkt->id; //prevent loop
+					        add_route(&r_entry,&rtable);			
+                  dump_table(&rtable);
+								 }
+				  //-----------------------------------------
 					
 		
 					break;

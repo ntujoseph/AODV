@@ -54,9 +54,9 @@ Section Cross References
     main.o(i.main) refers to main.o(i.send_message) for send_message
     main.o(i.main) refers to main.o(i.dump_packet) for dump_packet
     main.o(i.main) refers to main.o(i.update_life_time) for update_life_time
-    main.o(i.main) refers to main.o(i.add_route) for add_route
     main.o(i.main) refers to main.o(i.send_RREP) for send_RREP
     main.o(i.main) refers to main.o(i.Re_broadcast_RREQ) for Re_broadcast_RREQ
+    main.o(i.main) refers to main.o(i.add_route) for add_route
     main.o(i.main) refers to main.o(i.blink_led) for blink_led
     main.o(i.main) refers to main.o(.bss) for rtable
     main.o(i.main) refers to main.o(.data) for timer_count
