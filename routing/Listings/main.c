@@ -21,7 +21,7 @@
 #define MY_DEVICE_ADDR  0x0007//!!!!! SHOULD set different mac addr  !!!!!!!!
 #define SINK_ADDR 0x0012
 #define EMITTER_ADDR 0x0001   // periodically sent  (200ms), set by TA
-#define DEBUG 1
+#define DEBUG 0
 //------------------------------
 
 
@@ -263,22 +263,22 @@ int main(void)
 								  	
 					     //do i know the dest. addr ? 
 								r=find_next_hop(pkt->to,&rtable);	
-								if (r==NULL) { //if not found, broadcast RREQ 
+								if (r==NULL) { 
 									
 									if ((pkt->id>>16)==host.my_addr) {  //prevent loop (broadcast storm)
 										   debug_print("skip it\r\n");																						
 								  } else {
 										
-									   Re_broadcast_RREQ(pkt);				
-                      /*										
+									//   Re_broadcast_RREQ(pkt);				
+                      								
                       r=find_next_hop(Src_Addr,&rtable);	
                      	if (r==NULL || (r!=NULL && r->src_seq!=pkt->id)) {
 												    sprintf((char *)output_array,"%#x not found, Re_broadcast_RREQ\r\n",pkt->to);
 							 	             debug_print(output_array);						
-													 	 Re_broadcast_RREQ(pkt);				
+													 	 Re_broadcast_RREQ(pkt);		//if not found, broadcast RREQ 		
  										 	   
 										  }
-										*/
+										
 									}									
 			 
 								} else {  //yes, I know the route
