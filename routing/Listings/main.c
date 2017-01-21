@@ -596,7 +596,7 @@ void update_life_time(uint16_t dest, Route_Table *tbl)
    for (i=0;i<tbl->index;i++)
    {
        
-       if (dest==tbl->table[i].dest_mac) 
+		 if (dest==tbl->table[i].next_mac) //bug fix: 0170121 : not dest.mack, should  be next_mac
 				  tbl->table[i].life_time=timer_count;
            
    }
